@@ -7,4 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "tests passed (placeholder)"
+
+      - name: index.html が存在する
+        run: test -f index.html
+
+      - name: 必須セクションが揃っている
+        run: |
+          grep -q 'id="services"' index.html
+          grep -q 'id="works"' index.html
+          grep -q 'id="company"' index.html
+
+      - name: HTML の基本構造が壊れていない
+        run: |
+          grep -q '<!DOCTYPE html>' index.html
+          grep -q '</html>' index.html
+
+      - run: echo "all checks passed"
